@@ -177,70 +177,56 @@ class _LoginScreenState extends State<UniversityLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
-      body: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 400),
-          padding: const EdgeInsets.all(30),
-          decoration: BoxDecoration(
-            color: const Color(0xFFE5E7EB),
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 6,
-                offset: Offset(0, 4),
-              ),
-            ],
+      body: Stack(
+        children: [
+          Positioned(
+            top: 40,
+            left: 20,
+            child: IconButton(
+              icon: const Icon(Icons.arrow_back, color: Color(0xFF4EA199)),
+              onPressed: () => Navigator.pushNamed(context, '/'),
+            ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
-                  colors: [Colors.black, Colors.black],
-                ).createShader(bounds),
-                child: const Text(
-                  'University Login',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
+          Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 400),
+              padding: const EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE5E7EB),
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 6,
+                    offset: Offset(0, 4),
                   ),
-                ),
+                ],
               ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: identifierController,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                decoration: InputDecoration(
-                  hintText: 'Email or Phone',
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                        color: Color.fromRGBO(78, 161, 153, 0.5)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide:
-                        const BorderSide(color: Color(0xFF4EA199), width: 1.5),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Stack(
-                alignment: Alignment.centerRight,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Title
+                  ShaderMask(
+                    shaderCallback: (bounds) => const LinearGradient(
+                      colors: [Colors.black, Colors.black],
+                    ).createShader(bounds),
+                    child: const Text(
+                      'University Login',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Email or Phone Field
                   TextField(
-                    controller: passwordController,
-                    obscureText: !showPassword,
-                    textInputAction: TextInputAction.done,
-                    onSubmitted: (_) => handleLogin(),
+                    controller: identifierController,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
-                      hintText: 'Password',
+                      hintText: 'Email or Phone',
                       filled: true,
                       fillColor: Colors.white,
                       contentPadding: const EdgeInsets.symmetric(
@@ -257,68 +243,134 @@ class _LoginScreenState extends State<UniversityLogin> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                        showPassword ? Icons.visibility : Icons.visibility_off,
-                        color: const Color(0xFF4EA199)),
-                    onPressed: () =>
-                        setState(() => showPassword = !showPassword),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/forgotpassword'),
-                  child: ShaderMask(
-                    shaderCallback: (bounds) => const LinearGradient(
-                      colors: [Color(0xFF4EA199), Color(0xFF6FC3BD)],
-                    ).createShader(bounds),
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF4EA199),
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 48),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8)),
-                  elevation: 4,
-                ),
-                onPressed: isLoading ? null : handleLogin,
-                child: Text(isLoading ? 'Logging in...' : 'Login'),
-              ),
-              const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () => Navigator.pushNamed(context, '/signup'),
-                child: RichText(
-                  text: TextSpan(
-                    text: "Don't have an account? ",
-                    style: const TextStyle(color: Colors.black),
+                  const SizedBox(height: 12),
+                  // Password Field
+                  Stack(
+                    alignment: Alignment.centerRight,
                     children: [
-                      TextSpan(
-                        text: 'Sign Up',
-                        style: TextStyle(
-                          foreground: Paint()
-                            ..shader = LinearGradient(
-                              colors: [Color(0xFF4EA199), Color(0xFF6FC3BD)],
-                            ).createShader(Rect.fromLTWH(0, 0, 200, 70)),
+                      TextField(
+                        controller: passwordController,
+                        obscureText: !showPassword,
+                        textInputAction: TextInputAction.done,
+                        onSubmitted: (_) => handleLogin(),
+                        decoration: InputDecoration(
+                          hintText: 'Password',
+                          filled: true,
+                          fillColor: Colors.white,
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                                color: Color.fromRGBO(78, 161, 153, 0.5)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                                color: Color(0xFF4EA199), width: 1.5),
+                          ),
                         ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                            showPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: const Color(0xFF4EA199)),
+                        onPressed: () =>
+                            setState(() => showPassword = !showPassword),
                       ),
                     ],
                   ),
-                ),
-              )
-            ],
+                  const SizedBox(height: 10),
+                  // Forgot Password
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/forgotpassword'),
+                      child: ShaderMask(
+                        shaderCallback: (bounds) => const LinearGradient(
+                          colors: [Color(0xFF4EA199), Color(0xFF6FC3BD)],
+                        ).createShader(bounds),
+                        child: const Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Login Button
+                  GestureDetector(
+                    onTap: isLoading ? null : handleLogin,
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
+                      width: double.infinity,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF4EA199), Color(0xFF6FC3BD)],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          if (!isLoading)
+                            const BoxShadow(
+                              color: Color.fromRGBO(78, 161, 153, 0.3),
+                              offset: Offset(0, 4),
+                              blurRadius: 8,
+                            ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Text(
+                          isLoading ? 'Logging in...' : 'Login',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  Align(
+                    alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, '/signup'),
+                      child: RichText(
+                        text: TextSpan(
+                          text: "Don't have an account? ",
+                          style: const TextStyle(color: Colors.black),
+                          children: [
+                            TextSpan(
+                              text: 'Sign Up',
+                              style: TextStyle(
+                                foreground: Paint()
+                                  ..shader = const LinearGradient(
+                                    colors: [
+                                      Color(0xFF4EA199),
+                                      Color(0xFF6FC3BD)
+                                    ],
+                                  ).createShader(
+                                      const Rect.fromLTWH(0, 0, 200, 70)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
