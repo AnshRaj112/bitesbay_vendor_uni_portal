@@ -3,6 +3,8 @@ import 'package:bitesbay_vendor_uni_portal/ResetPassword/VendorReset.dart';
 import 'package:bitesbay_vendor_uni_portal/home.dart';
 import 'package:bitesbay_vendor_uni_portal/ForgotPassword/UniForgot.dart';
 import 'package:bitesbay_vendor_uni_portal/ResetPassword/UniReset.dart';
+import 'package:bitesbay_vendor_uni_portal/OtpVerify/UniOtp.dart';
+import 'package:bitesbay_vendor_uni_portal/OtpVerify/VendorOtp.dart';
 import 'package:flutter/material.dart';
 // import 'Login/UniversityLogin.dart';
 // import 'Dashboard/dashboard_uni.dart';
@@ -38,6 +40,20 @@ class MyApp extends StatelessWidget {
             final email = args['email'] as String;
             return MaterialPageRoute(
               builder: (context) => VendorReset(email: email),
+            );
+          }
+          if (settings.name == '/OtpVerify/UniOtp') {
+            final args = settings.arguments as Map<String, dynamic>;
+            final email = args['email'] as String;
+            return MaterialPageRoute(
+              builder: (context) => UniOtp(email: email),
+            );
+          }
+          if (settings.name == '/OtpVerify/VendorOtp') {
+            final args = settings.arguments as Map<String, dynamic>;
+            final email = args['email'] as String;
+            return MaterialPageRoute(
+              builder: (context) => VendorOtp(email: email),
             );
           }
           switch (settings.name) {

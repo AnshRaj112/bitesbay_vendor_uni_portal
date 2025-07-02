@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-// import 'package:bitesbay_vendor_uni_portal/Login/UniversityLogin.dart';
-// import 'package:bitesbay_vendor_uni_portal/Login/VendorLogin.dart';
 import 'package:bitesbay_vendor_uni_portal/Login/UniversityLogin.dart' as uni;
 import 'package:bitesbay_vendor_uni_portal/Login/VendorLogin.dart' as vendor;
-import 'package:bitesbay_vendor_uni_portal/ResetPassword/UniReset.dart'
-    as uniReset;
-import 'package:bitesbay_vendor_uni_portal/ResetPassword/VendorReset.dart'
-    as VendorReset;
+// import 'package:bitesbay_vendor_uni_portal/ResetPassword/UniReset.dart'
+//     as uniReset;
+// import 'package:bitesbay_vendor_uni_portal/ResetPassword/VendorReset.dart'
+//     as VendorReset;
+// import 'package:bitesbay_vendor_uni_portal/OtpVerify/UniOtp.dart' as UniOtp;
 
 class Home extends StatelessWidget {
   const Home({super.key});

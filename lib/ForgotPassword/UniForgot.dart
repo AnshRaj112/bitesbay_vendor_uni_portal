@@ -45,7 +45,7 @@ class _ForgotPasswordScreenState extends State<UniForgot> {
         Future.delayed(const Duration(seconds: 2), () {
           Navigator.pushNamed(
             context,
-            '/otpverification',
+            '/OtpVerfy/UniOtp',
             arguments: {
               "email": data['email'],
               "from": "forgotpassword",
