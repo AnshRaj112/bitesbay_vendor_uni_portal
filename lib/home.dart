@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
-// import 'package:bitesbay_vendor_uni_portal/Login/UniversityLogin.dart';
-// import 'package:bitesbay_vendor_uni_portal/Login/VendorLogin.dart';
 import 'package:bitesbay_vendor_uni_portal/Login/UniversityLogin.dart' as uni;
 import 'package:bitesbay_vendor_uni_portal/Login/VendorLogin.dart' as vendor;
+// import 'package:bitesbay_vendor_uni_portal/ResetPassword/UniReset.dart'
+//     as uniReset;
+// import 'package:bitesbay_vendor_uni_portal/ResetPassword/VendorReset.dart'
+//     as VendorReset;
+// import 'package:bitesbay_vendor_uni_portal/OtpVerify/UniOtp.dart' as UniOtp;
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -91,6 +94,33 @@ class Home extends StatelessWidget {
                   ),
                 ),
               ),
+              // const SizedBox(height: 16),
+              // SizedBox(
+              //   width: double.infinity,
+              //   child: ElevatedButton(
+              //     onPressed: () {
+              //       Navigator.pushNamed(
+              //         context,
+              //         '/ResetPassword/VendorReset',
+              //         arguments: {'email': 'user@example.com'},
+              //       );
+              //     },
+              //     style: ElevatedButton.styleFrom(
+              //       padding: const EdgeInsets.symmetric(vertical: 16),
+              //       backgroundColor: const Color(0xFF4EA199),
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(8),
+              //       ),
+              //     ),
+              //     child: const Text(
+              //       "Vendor Reset",
+              //       style: TextStyle(
+              //         fontSize: 16,
+              //         color: Colors.white,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

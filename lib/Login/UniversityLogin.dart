@@ -194,7 +194,7 @@ class _LoginScreenState extends State<UniversityLogin> {
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Title
                   ShaderMask(
@@ -277,8 +277,8 @@ class _LoginScreenState extends State<UniversityLogin> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/forgotpassword'),
+                      onTap: () => Navigator.pushNamed(
+                          context, '/ForgotPassword/UniForgot'),
                       child: ShaderMask(
                         shaderCallback: (bounds) => const LinearGradient(
                           colors: [Color(0xFF4EA199), Color(0xFF6FC3BD)],
