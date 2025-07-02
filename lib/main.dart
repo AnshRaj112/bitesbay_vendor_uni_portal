@@ -1,8 +1,14 @@
+import 'package:bitesbay_vendor_uni_portal/ForgotPassword/VendorForgot.dart';
+import 'package:bitesbay_vendor_uni_portal/ResetPassword/VendorReset.dart';
 import 'package:bitesbay_vendor_uni_portal/home.dart';
+import 'package:bitesbay_vendor_uni_portal/ForgotPassword/UniForgot.dart';
+import 'package:bitesbay_vendor_uni_portal/ResetPassword/UniReset.dart';
+import 'package:bitesbay_vendor_uni_portal/OtpVerify/UniOtp.dart';
+import 'package:bitesbay_vendor_uni_portal/OtpVerify/VendorOtp.dart';
 import 'package:flutter/material.dart';
-import 'Login/UniversityLogin.dart';
-import 'Dashboard/dashboard_uni.dart';
-import 'config/app_config.dart';
+// import 'Login/UniversityLogin.dart';
+// import 'Dashboard/dashboard_uni.dart';
+// import 'config/app_config.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,16 +20,50 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Login Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-      ),
-      home: const Home(),
-      routes: {
-        '/login': (context) => const UniversityLogin(),
-        '/dashboard/uni': (context) => const UniversityDashboard(),
-      },
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Login Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.teal,
+        ),
+        home: const Home(),
+        onGenerateRoute: (settings) {
+          // Handle named routes with arguments
+          if (settings.name == '/ResetPassword/UniReset') {
+            final args = settings.arguments as Map<String, dynamic>;
+            final email = args['email'] as String;
+            return MaterialPageRoute(
+              builder: (context) => UniReset(email: email),
+            );
+          }
+          if (settings.name == '/ResetPassword/VendorReset') {
+            final args = settings.arguments as Map<String, dynamic>;
+            final email = args['email'] as String;
+            return MaterialPageRoute(
+              builder: (context) => VendorReset(email: email),
+            );
+          }
+          if (settings.name == '/OtpVerify/UniOtp') {
+            final args = settings.arguments as Map<String, dynamic>;
+            final email = args['email'] as String;
+            return MaterialPageRoute(
+              builder: (context) => UniOtp(email: email),
+            );
+          }
+          if (settings.name == '/OtpVerify/VendorOtp') {
+            final args = settings.arguments as Map<String, dynamic>;
+            final email = args['email'] as String;
+            return MaterialPageRoute(
+              builder: (context) => VendorOtp(email: email),
+            );
+          }
+          switch (settings.name) {
+            case '/ForgotPassword/UniForgot':
+              return MaterialPageRoute(builder: (_) => const UniForgot());
+            case '/ForgotPassword/VendorForgot':
+              return MaterialPageRoute(builder: (_) => const VendorForgot());
+            default:
+              return null;
+          }
+        });
   }
 }

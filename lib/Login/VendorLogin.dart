@@ -214,7 +214,7 @@ class _VendorLogin extends State<VendorLogin> {
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // Title
                   ShaderMask(
@@ -297,8 +297,8 @@ class _VendorLogin extends State<VendorLogin> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/forgotpassword'),
+                      onTap: () => Navigator.pushNamed(
+                          context, '/ForgotPassword/VendorForgot'),
                       child: ShaderMask(
                         shaderCallback: (bounds) => const LinearGradient(
                           colors: [Color(0xFF4EA199), Color(0xFF6FC3BD)],
@@ -347,35 +347,35 @@ class _VendorLogin extends State<VendorLogin> {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 20),
 
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/signup'),
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Don't have an account? ",
-                          style: const TextStyle(color: Colors.black),
-                          children: [
-                            TextSpan(
-                              text: 'Sign Up',
-                              style: TextStyle(
-                                foreground: Paint()
-                                  ..shader = const LinearGradient(
-                                    colors: [
-                                      Color(0xFF4EA199),
-                                      Color(0xFF6FC3BD)
-                                    ],
-                                  ).createShader(
-                                      const Rect.fromLTWH(0, 0, 200, 70)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
+                  // Align(
+                  //   alignment: Alignment.center,
+                  //   child: GestureDetector(
+                  //     onTap: () => Navigator.pushNamed(context, '/signup'),
+                  //     child: RichText(
+                  //       text: TextSpan(
+                  //         text: "Don't have an account? ",
+                  //         style: const TextStyle(color: Colors.black),
+                  //         children: [
+                  //           TextSpan(
+                  //             text: 'Sign Up',
+                  //             style: TextStyle(
+                  //               foreground: Paint()
+                  //                 ..shader = const LinearGradient(
+                  //                   colors: [
+                  //                     Color(0xFF4EA199),
+                  //                     Color(0xFF6FC3BD)
+                  //                   ],
+                  //                 ).createShader(
+                  //                     const Rect.fromLTWH(0, 0, 200, 70)),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),
