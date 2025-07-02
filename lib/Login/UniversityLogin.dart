@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:another_flushbar/flushbar.dart';
+import '../config/app_config.dart';
 
 class UniversityLogin extends StatefulWidget {
   const UniversityLogin({super.key});
@@ -22,8 +23,7 @@ class _LoginScreenState extends State<UniversityLogin> {
 
   late final Timer _sessionTimer;
 
-  final String backendUrl = const String.fromEnvironment("BACKEND_URL",
-      defaultValue: "http://localhost:3000");
+  final String backendUrl = AppConfig.backendUrl;
 
   @override
   void initState() {
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<UniversityLogin> {
 
     try {
       final res = await http.post(
-        Uri.parse('$backendUrl/api/user/auth/login'),
+        Uri.parse('${AppConfig.backendUrl}${AppConfig.uniLoginEndpoint}'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'identifier': identifier, 'password': password}),
       );
@@ -122,20 +122,10 @@ class _LoginScreenState extends State<UniversityLogin> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('token', data['token']);
 
-      final user = data['user'];
-      final collegeName = (user['college']['name'] as String?)
-              ?.toLowerCase()
-              .replaceAll(' ', '-') ??
-          'college';
-      final collegeId = user['college']['_id'] ?? '';
-
       showToast("Login successful!");
 
-      final redirectPath =
-          '/home/$collegeName${collegeId.isNotEmpty ? '?cid=$collegeId' : ''}';
-
       Future.delayed(const Duration(seconds: 2), () {
-        Navigator.pushReplacementNamed(context, redirectPath);
+        Navigator.pushReplacementNamed(context, AppConfig.uniDashboardRoute);
       });
     } catch (e) {
       showToast("An unexpected error occurred. Please try again.",
@@ -151,7 +141,7 @@ class _LoginScreenState extends State<UniversityLogin> {
 
     try {
       final res = await http.get(
-        Uri.parse('$backendUrl/api/user/auth/refresh'),
+        Uri.parse('${AppConfig.backendUrl}${AppConfig.uniRefreshEndpoint}'),
         headers: token != null ? {'Authorization': 'Bearer $token'} : {},
       );
 
@@ -164,7 +154,7 @@ class _LoginScreenState extends State<UniversityLogin> {
       } else if (res.statusCode == 401 || res.statusCode == 403) {
         await prefs.remove('token');
         print("🔴 Session expired, redirecting to login...");
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushReplacementNamed(context, AppConfig.loginRoute);
       } else {
         print("⚠️ Unexpected response from server");
       }
