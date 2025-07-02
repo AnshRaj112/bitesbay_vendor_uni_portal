@@ -327,35 +327,35 @@ class _LoginScreenState extends State<UniversityLogin> {
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  // const SizedBox(height: 20),
 
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, '/signup'),
-                      child: RichText(
-                        text: TextSpan(
-                          text: "Don't have an account? ",
-                          style: const TextStyle(color: Colors.black),
-                          children: [
-                            TextSpan(
-                              text: 'Sign Up',
-                              style: TextStyle(
-                                foreground: Paint()
-                                  ..shader = const LinearGradient(
-                                    colors: [
-                                      Color(0xFF4EA199),
-                                      Color(0xFF6FC3BD)
-                                    ],
-                                  ).createShader(
-                                      const Rect.fromLTWH(0, 0, 200, 70)),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
+                  // Align(
+                  //   alignment: Alignment.center,
+                  //   child: GestureDetector(
+                  //     onTap: () => Navigator.pushNamed(context, '/signup'),
+                  //     child: RichText(
+                  //       text: TextSpan(
+                  //         text: "Don't have an account? ",
+                  //         style: const TextStyle(color: Colors.black),
+                  //         children: [
+                  //           TextSpan(
+                  //             text: 'Sign Up',
+                  //             style: TextStyle(
+                  //               foreground: Paint()
+                  //                 ..shader = const LinearGradient(
+                  //                   colors: [
+                  //                     Color(0xFF4EA199),
+                  //                     Color(0xFF6FC3BD)
+                  //                   ],
+                  //                 ).createShader(
+                  //                     const Rect.fromLTWH(0, 0, 200, 70)),
+                  //             ),
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),
