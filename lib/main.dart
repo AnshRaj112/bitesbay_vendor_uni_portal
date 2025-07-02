@@ -22,12 +22,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.teal,
       ),
       home: const Home(),
-      routes: {
-        '/ForgotPassword/UniForgot': (context) => const UniForgot(),
-        '/ForgotPassword/VendorForgot': (context) => const VendorForgot(),
-        '/login': (context) => const UniversityLogin(),
-        '/dashboard/uni': (context) => const UniversityDashboard(),
-      },
     );
   }
 }
