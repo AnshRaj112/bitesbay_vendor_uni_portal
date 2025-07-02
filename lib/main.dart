@@ -1,4 +1,6 @@
+import 'package:bitesbay_vendor_uni_portal/ForgotPassword/VendorForgot.dart';
 import 'package:bitesbay_vendor_uni_portal/home.dart';
+import 'package:bitesbay_vendor_uni_portal/ForgotPassword/UniForgot.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,6 +19,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.teal,
       ),
       home: const Home(),
+      routes: {
+        '/ForgotPassword/UniForgot': (context) => const UniForgot(),
+        '/ForgotPassword/VendorForgot': (context) => const VendorForgot(),
+      },
     );
   }
 }
