@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:another_flushbar/flushbar.dart';
+import '../config/app_config.dart';
 
 class VendorLogin extends StatefulWidget {
   const VendorLogin({super.key});
@@ -22,8 +23,7 @@ class _VendorLogin extends State<VendorLogin> {
 
   late final Timer _sessionTimer;
 
-  final String backendUrl = const String.fromEnvironment("BACKEND_URL",
-      defaultValue: "http://localhost:3000");
+  final String backendUrl = AppConfig.backendUrl;
 
   @override
   void initState() {
@@ -98,7 +98,7 @@ class _VendorLogin extends State<VendorLogin> {
 
     try {
       final res = await http.post(
-        Uri.parse('$backendUrl/api/user/auth/login'),
+        Uri.parse('$backendUrl/api/vendor/auth/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'identifier': identifier, 'password': password}),
       );
@@ -114,7 +114,7 @@ class _VendorLogin extends State<VendorLogin> {
       if (res.statusCode == 400 && data['redirectTo'] != null) {
         showToast("Account not verified. OTP sent to email.", success: false);
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushReplacementNamed(context, '/otpverification',
+          Navigator.pushReplacementNamed(context, '/OtpVerify/VendorOtp',
               arguments: {
                 'email': identifier,
                 'from': 'login',
@@ -145,7 +145,7 @@ class _VendorLogin extends State<VendorLogin> {
           '/home/$collegeName${collegeId.isNotEmpty ? '?cid=$collegeId' : ''}';
 
       Future.delayed(const Duration(seconds: 2), () {
-        Navigator.pushReplacementNamed(context, redirectPath);
+        Navigator.pushReplacementNamed(context, '/dashboard_vendor');
       });
     } catch (e) {
       showToast("An unexpected error occurred. Please try again.",
@@ -161,7 +161,7 @@ class _VendorLogin extends State<VendorLogin> {
 
     try {
       final res = await http.get(
-        Uri.parse('$backendUrl/api/user/auth/refresh'),
+        Uri.parse('$backendUrl/api/vendor/auth/refresh'),
         headers: token != null ? {'Authorization': 'Bearer $token'} : {},
       );
 

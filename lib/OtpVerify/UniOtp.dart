@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import '../config/app_config.dart';
 
 class UniOtp extends StatefulWidget {
   final String email;
@@ -24,8 +25,7 @@ class _OtpVerificationScreenState extends State<UniOtp> {
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   bool isLoading = false;
 
-  final String backendUrl = const String.fromEnvironment("BACKEND_URL",
-      defaultValue: "http://localhost:3000");
+  final String backendUrl = AppConfig.backendUrl;
 
   @override
   void dispose() {
@@ -57,14 +57,16 @@ class _OtpVerificationScreenState extends State<UniOtp> {
   Future<void> handleVerifyOtp() async {
     final otp = _otpControllers.map((c) => c.text).join();
     if (otp.length != 6) {
-      Fluttertoast.showToast(msg: 'Please enter a 6-digit OTP.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a 6-digit OTP.')),
+      );
       return;
     }
 
     setState(() => isLoading = true);
     try {
       final response = await http.post(
-        Uri.parse('$backendUrl/api/user/auth/otpverification'),
+        Uri.parse('$backendUrl/api/uni/auth/otpverification'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'email': widget.email, 'otp': otp}),
       );
@@ -74,7 +76,7 @@ class _OtpVerificationScreenState extends State<UniOtp> {
       if (response.statusCode == 200) {
         final token = data['token'];
         final userRes = await http.get(
-          Uri.parse('$backendUrl/api/user/auth/user'),
+          Uri.parse('$backendUrl/api/uni/auth/user'),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
@@ -82,22 +84,29 @@ class _OtpVerificationScreenState extends State<UniOtp> {
         );
 
         if (userRes.statusCode == 200) {
-          Fluttertoast.showToast(msg: 'OTP verified successfully!');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('OTP verified successfully!')),
+          );
           if (widget.fromPage == 'forgotpassword') {
-            Navigator.pushReplacementNamed(context, '/resetpassword',
+            Navigator.pushReplacementNamed(context, '/ResetPassword/UniReset',
                 arguments: {'email': widget.email});
           } else {
-            Navigator.pushReplacementNamed(context, '/home');
+            Navigator.pushReplacementNamed(context, '/dashboard_uni');
           }
         } else {
-          Fluttertoast.showToast(msg: 'Failed to fetch user data.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Failed to fetch user data.')),
+          );
         }
       } else {
-        Fluttertoast.showToast(
-            msg: data['message'] ?? 'OTP verification failed.');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['message'] ?? 'OTP verification failed.')),
+        );
       }
     } catch (e) {
-      Fluttertoast.showToast(msg: 'An error occurred. Please try again.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('An error occurred. Please try again.')),
+      );
     } finally {
       setState(() => isLoading = false);
     }
@@ -129,7 +138,17 @@ class _OtpVerificationScreenState extends State<UniOtp> {
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        onChanged: (value) => handleChange(value, index),
+        onChanged: (value) {
+          if (value.length > 1) {
+            _otpControllers[index].text = value[value.length - 1];
+            _otpControllers[index].selection = TextSelection.fromPosition(
+              TextPosition(offset: 1),
+            );
+          }
+          if (value.isNotEmpty && index < _otpControllers.length - 1) {
+            _focusNodes[index + 1].requestFocus();
+          }
+        },
         onTap: () {
           if (index == 0) {
             handlePasteClipboard();

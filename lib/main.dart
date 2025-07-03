@@ -6,6 +6,10 @@ import 'package:bitesbay_vendor_uni_portal/ResetPassword/UniReset.dart';
 import 'package:bitesbay_vendor_uni_portal/OtpVerify/UniOtp.dart';
 import 'package:bitesbay_vendor_uni_portal/OtpVerify/VendorOtp.dart';
 import 'package:flutter/material.dart';
+import 'package:bitesbay_vendor_uni_portal/Dashboard/dashboard_uni.dart';
+import 'package:bitesbay_vendor_uni_portal/Dashboard/dashboard_vendor.dart';
+import 'package:bitesbay_vendor_uni_portal/Login/UniversityLogin.dart';
+import 'package:bitesbay_vendor_uni_portal/Login/VendorLogin.dart';
 // import 'Login/UniversityLogin.dart';
 // import 'Dashboard/dashboard_uni.dart';
 // import 'config/app_config.dart';
@@ -45,15 +49,17 @@ class MyApp extends StatelessWidget {
           if (settings.name == '/OtpVerify/UniOtp') {
             final args = settings.arguments as Map<String, dynamic>;
             final email = args['email'] as String;
+            final fromPage = args['from'] as String?;
             return MaterialPageRoute(
-              builder: (context) => UniOtp(email: email),
+              builder: (context) => UniOtp(email: email, fromPage: fromPage),
             );
           }
           if (settings.name == '/OtpVerify/VendorOtp') {
             final args = settings.arguments as Map<String, dynamic>;
             final email = args['email'] as String;
+            final fromPage = args['from'] as String?;
             return MaterialPageRoute(
-              builder: (context) => VendorOtp(email: email),
+              builder: (context) => VendorOtp(email: email, fromPage: fromPage),
             );
           }
           switch (settings.name) {
@@ -61,6 +67,14 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => const UniForgot());
             case '/ForgotPassword/VendorForgot':
               return MaterialPageRoute(builder: (_) => const VendorForgot());
+            case '/dashboard_uni':
+              return MaterialPageRoute(builder: (_) => const UniversityDashboard());
+            case '/dashboard_vendor':
+              return MaterialPageRoute(builder: (_) => const VendorDashboard());
+            case '/Login/UniversityLogin':
+              return MaterialPageRoute(builder: (_) => const UniversityLogin());
+            case '/Login/VendorLogin':
+              return MaterialPageRoute(builder: (_) => const VendorLogin());
             default:
               return null;
           }

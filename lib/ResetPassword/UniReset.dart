@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../config/app_config.dart';
 
 class UniReset extends StatefulWidget {
   final String email;
@@ -20,10 +21,7 @@ class _ResetPasswordScreenState extends State<UniReset> {
   bool _showConfirmPassword = false;
   bool _isLoading = false;
 
-  final String backendUrl = const String.fromEnvironment(
-    'BACKEND_URL',
-    defaultValue: 'http://localhost:3000',
-  );
+  final String backendUrl = AppConfig.backendUrl;
 
   bool validatePassword(String password) {
     return password.length >= 8 &&
@@ -64,7 +62,7 @@ class _ResetPasswordScreenState extends State<UniReset> {
     try {
       setState(() => _isLoading = true);
       final res = await http.post(
-        Uri.parse('$backendUrl/api/user/auth/resetpassword'),
+        Uri.parse('$backendUrl/api/uni/auth/resetpassword'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "email": widget.email,
@@ -76,7 +74,7 @@ class _ResetPasswordScreenState extends State<UniReset> {
       if (res.statusCode == 200) {
         Fluttertoast.showToast(msg: "Password reset successfully!");
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.of(context).pushReplacementNamed("/login");
+          Navigator.pushReplacementNamed(context, '/Login/UniversityLogin');
         });
       } else {
         Fluttertoast.showToast(msg: data['message'] ?? "Reset failed.");
