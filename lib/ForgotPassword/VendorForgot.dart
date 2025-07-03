@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../config/app_config.dart';
 
 class VendorForgot extends StatefulWidget {
   const VendorForgot({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class VendorForgot extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<VendorForgot> {
   final TextEditingController _identifierController = TextEditingController();
   bool _isLoading = false;
+  final String backendUrl = AppConfig.backendUrl;
 
   Future<void> handleForgotPassword() async {
     final identifier = _identifierController.text.trim();
@@ -28,8 +30,7 @@ class _ForgotPasswordScreenState extends State<VendorForgot> {
 
     try {
       final response = await http.post(
-        Uri.parse(
-            "${const String.fromEnvironment('BACKEND_URL')}/api/user/auth/forgotpassword"),
+        Uri.parse("${backendUrl}/api/vendor/auth/forgotpassword"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({"identifier": identifier}),
       );
@@ -43,9 +44,9 @@ class _ForgotPasswordScreenState extends State<VendorForgot> {
         );
 
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushNamed(
+          Navigator.pushReplacementNamed(
             context,
-            '/otpverification',
+            '/OtpVerify/VendorOtp',
             arguments: {
               "email": data['email'],
               "from": "forgotpassword",

@@ -88,7 +88,7 @@ class _LoginScreenState extends State<UniversityLogin> {
 
     try {
       final res = await http.post(
-        Uri.parse('${AppConfig.backendUrl}${AppConfig.uniLoginEndpoint}'),
+        Uri.parse('${AppConfig.backendUrl}/api/uni/auth/login'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'identifier': identifier, 'password': password}),
       );
@@ -104,7 +104,7 @@ class _LoginScreenState extends State<UniversityLogin> {
       if (res.statusCode == 400 && data['redirectTo'] != null) {
         showToast("Account not verified. OTP sent to email.", success: false);
         Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushReplacementNamed(context, '/otpverification',
+          Navigator.pushReplacementNamed(context, '/OtpVerify/UniOtp',
               arguments: {
                 'email': identifier,
                 'from': 'login',
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<UniversityLogin> {
       showToast("Login successful!");
 
       Future.delayed(const Duration(seconds: 2), () {
-        Navigator.pushReplacementNamed(context, AppConfig.uniDashboardRoute);
+        Navigator.pushReplacementNamed(context, '/dashboard_uni');
       });
     } catch (e) {
       showToast("An unexpected error occurred. Please try again.",
@@ -141,7 +141,7 @@ class _LoginScreenState extends State<UniversityLogin> {
 
     try {
       final res = await http.get(
-        Uri.parse('${AppConfig.backendUrl}${AppConfig.uniRefreshEndpoint}'),
+        Uri.parse('${AppConfig.backendUrl}/api/uni/auth/refresh'),
         headers: token != null ? {'Authorization': 'Bearer $token'} : {},
       );
 
